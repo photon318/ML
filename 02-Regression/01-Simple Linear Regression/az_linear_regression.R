@@ -1,4 +1,4 @@
-setwd("/Users/Alexz/Documents/GitHub/RScripts/Data")
+setwd("/Users/Alexz/Documents/GitHub/ML/Data")
 
 dataset = read.csv("Salary_Data.csv")
 
