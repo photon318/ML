@@ -48,10 +48,18 @@ from sklearn.linear_model import LinearRegression
 regressor = LinearRegression()
 regressor.fit(X_train, y_train)
 
+
 #predict
 y_pred = regressor.predict(X_test)
 
-#bulding optimal model with using baxkward elimimination
+#display some charts 
+
+plt.scatter(X_test[:, 2], regressor.predict(X_test))
+plt.scatter(X_train[:, 2], regressor.predict(X_train), c = 'red')
+
+plt.show()
+
+#bulding optimal model with using backward elimimination
 
 import statsmodels.formula.api as sm
 
@@ -77,7 +85,29 @@ X_opt = X[:,[0,3]]
 regressor_OLS = sm.OLS(endog = Y, exog = X_opt).fit()
 regressor_OLS.summary()
 
+#train new optimized model
 
+X_train_opt, X_test_opt, y_train_opt, y_test_opt = train_test_split(X_opt, Y, 
+                                                    test_size = 0.2,
+                                                    random_state = 0
+                                                    )
+#new optimized regressor
+
+regressor_opt = LinearRegression()
+regressor_opt.fit(X_train_opt, y_train_opt)
+
+
+#predict
+y_pred_opt = regressor_opt.predict(X_test_opt)
+
+#Display results
+plt.scatter(X_train[:, 2], regressor.predict(X_train), c = 'red')
+plt.scatter(X_test[:, 2], regressor.predict(X_test), c = 'blue')
+plt.scatter(X_train_opt[:, 1], regressor_opt.predict(X_train_opt), c = 'orange')
+plt.scatter(X_test_opt[:, 1], regressor_opt.predict(X_test_opt), c = 'green')
+plt.xlabel("X0+R&D")
+plt.ylabel("Net Profit")
+plt.show()
 
 
 
