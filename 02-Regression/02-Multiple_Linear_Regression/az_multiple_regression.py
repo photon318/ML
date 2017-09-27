@@ -79,6 +79,10 @@ X_opt = X[:,[0,3,5]]
 regressor_OLS = sm.OLS(endog = Y, exog = X_opt).fit()
 regressor_OLS.summary()
 
+
+
+
+
 X_opt = X[:,[0,3]]
 regressor_OLS = sm.OLS(endog = Y, exog = X_opt).fit()
 regressor_OLS.summary()
@@ -99,13 +103,41 @@ regressor_opt.fit(X_train_opt, y_train_opt)
 y_pred_opt = regressor_opt.predict(X_test_opt)
 
 #Display results
-plt.scatter(X_train[:, 2], regressor.predict(X_train), c = 'red')
-plt.scatter(X_test[:, 2], regressor.predict(X_test), c = 'blue')
-plt.scatter(X_train_opt[:, 1], regressor_opt.predict(X_train_opt), c = 'orange')
-plt.scatter(X_test_opt[:, 1], regressor_opt.predict(X_test_opt), c = 'green')
+plt.rcParams['figure.figsize'] = (12.0, 10.0)
+
+size=300
+a=.5
+mark='+'
+#Display original train set
+plt.scatter(X_train[:, 2], regressor.predict(X_train), 
+            c = 'red', alpha=a, marker = mark, s=size, 
+            label='Multiple regression')
+#Display orig multi. reg prediction
+plt.scatter(X_test[:, 2], regressor.predict(X_test), 
+            c = 'blue',  alpha=a, marker = mark, s=size,
+            label = 'Multiple Reg. Prediction')
+#display prediction based on optimized train
+#plt.scatter(X_train_opt[:, 1], regressor_opt.predict(X_train_opt), c = 'orange',  alpha=0.3, marker = 'o', s=size)
+plt.scatter(X_test_opt[:, 1], regressor_opt.predict(X_test_opt), 
+            c = 'green' , alpha=a, marker = mark, s=size, 
+            label = 'Optimized C+X1+X2 Prediction')
+plt.legend()
 plt.xlabel("X0+R&D")
 plt.ylabel("Net Profit")
+plt.grid(b=True)
 plt.show()
 
-
-
+#
+#
+#np.random.seed(19680801)
+#
+#N = 50
+#t = np.random.rand(N)
+#u = np.random.rand(N)
+#colors = np.random.rand(N)
+#area = np.pi * (30 * np.random.rand(N))**2  # 0 to 15 point radii
+#
+#plt.scatter(t, u, s=area, c=colors, alpha=0.3)
+#plt.show()
+#
+#
